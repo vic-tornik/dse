@@ -1,0 +1,9 @@
+-- Supply login, tenant and signer via psql -v. Use a fresh login name.
+\set ON_ERROR_STOP on
+BEGIN;
+CREATE ROLE :"login" LOGIN IN ROLE dse_client;
+INSERT INTO dse.tenants (id, slug) VALUES (:'tenant'::uuid, :'tenant')
+    ON CONFLICT (id) DO NOTHING;
+INSERT INTO dse.client_bindings (login, tenant_id, signer_id)
+    VALUES (:'login', :'tenant'::uuid, :'signer');
+COMMIT;

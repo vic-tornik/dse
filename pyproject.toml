@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dse-foundation"
+version = "0.2.0"
+requires-python = ">=3.12"
+description = "DSE local capsule tooling and PostgreSQL catalog foundation"
+dependencies = ["cryptography==50.0.2"]
+
+[project.optional-dependencies]
+catalog = ["psycopg[binary]>=3.2,<4"]
+
+[project.scripts]
+dse = "dse.cli:main"
+
+[tool.setuptools]
+packages = ["dse"]
