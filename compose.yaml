@@ -11,6 +11,8 @@ services:
       - atlas-data:/var/lib/postgresql
       - ./migrations/001_atlas.sql:/docker-entrypoint-initdb.d/001_atlas.sql:ro
       - ./migrations/002_commit.sql:/docker-entrypoint-initdb.d/002_commit.sql:ro
+      - ./migrations/003_reads.sql:/docker-entrypoint-initdb.d/003_reads.sql:ro
+      - ./migrations/004_operations.sql:/docker-entrypoint-initdb.d/004_operations.sql:ro
       - ./tests/catalog.sql:/checks/catalog.sql:ro
       - ./migrations/provision_client.psql:/checks/provision_client.psql:ro
     healthcheck:

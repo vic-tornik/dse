@@ -33,6 +33,7 @@ class PostgresCommitTests(unittest.TestCase):
         admin.execute(sql.SQL("CREATE ROLE {} LOGIN PASSWORD {} IN ROLE dse_client").format(
             sql.Identifier(login), sql.Literal(password)))
         self.addCleanup(admin.execute, sql.SQL("DROP ROLE {}").format(sql.Identifier(login)))
+        self.addCleanup(admin.execute, "DELETE FROM dse.client_bindings WHERE login=%s", (login,))
         admin.execute("INSERT INTO dse.tenants (id,slug) VALUES (%s,%s)", (key.tenant, login))
         admin.execute("INSERT INTO dse.client_bindings VALUES (%s,%s,%s)", (login, key.tenant, key.signer_id))
         client = make_conninfo(dsn, user=login, password=password)
